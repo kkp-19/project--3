@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATS Resume Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color:white ;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #0408fd;
+      text-align: center;
+      margin-top: 30px;
+      animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    p, input[type="text"], input[type="file"], button {
+      margin: 10px 0;
+      width: 100%;
+    }
+
+    input[type="text"], input[type="file"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+    }
+
+    button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>ATS Resume Checker</h1>
+  <p>Enter the company name and role you are applying for:</p>
+  <input type="text" id="companyName" placeholder="Company Name">
+  <input type="text" id="role" placeholder="Role in Company">
+  <p>Enter skills required by the company (comma-separated):</p>
+  <input type="text" id="skills" placeholder="Skills Required">
+  <p style="color: #007bff;">Upload your resume:</p>
+  <input type="file" id="resume" accept=".pdf,.doc,.docx" style="color: #007bff;">
+  <button onclick="checkResume()">Check Resume</button>
+  <div id="result"></div>
+
+  <script>
+    function checkResume() {
+      var companyName = document.getElementById("companyName").value;
+      var role = document.getElementById("role").value;
+      var requiredSkills = document.getElementById("skills").value.split(",").map(skill => skill.trim().toLowerCase()); // Convert skills to lowercase
+      var resume = document.getElementById("resume").files[0];
+
+      // Simulate ATS resume checking process
+      // Here you would implement the actual logic to check the resume
+
+      if (!resume) {
+        document.getElementById("result").innerHTML = "Please upload your resume!";
+        return;
+      }
+
+      // Simulated logic to check if all required skills are present in the resume
+      var resumeSkills = ["java", "python", "html", "css", "javascript"]; // Sample resume skills (converted to lowercase)
+      var missingSkills = [];
+      requiredSkills.forEach(skill => {
+        if (!resumeSkills.includes(skill) && skill.length > 1) { // Check if skill exists in resumeSkills and length > 1
+          missingSkills.push(skill);
+        }
+      });
+
+      if (missingSkills.length > 0) {
+        document.getElementById("result").innerHTML = "Your resume is not suitable for applying to " + companyName + " for the role of " + role + ". Missing skills: " + missingSkills.join(", ");
+        return;
+      }
+
+      // If all required skills are present, resume is suitable
+      document.getElementById("result").innerHTML = "Your resume is suitable for applying to " + companyName + " for the role of " + role + "!";
+    }
+  </script>
+</body>
+</html>
